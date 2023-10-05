@@ -42,6 +42,8 @@
       cy.get('#phone-checkbox').click()
       cy.get('.button[type="submit"]').click(); 
       cy.get('.error').should('be.visible');
+
+    
     })
   });
   
