@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+const { should } = require("chai");
+
   describe('Central de Atendimento ao Cliente TAT', function() {
     beforeEach(function() {
       cy.visit('./src/index.html'); // Visiting the path to internal HTML file
@@ -10,7 +12,7 @@
     });
   
     it('preenche os campos obrigatórios e envia o formulário', function() {
-      const longText = 'Me conseguindo uma vaga de júnior, para que possa mostrar meu potencial e crescer ainda mais profissionalmente. Por isso, me arruma pelo menos uma entrevista, o resto eu desenrolo.'
+      const longText = 'Campo - Como pode ajudar? Me conseguindo uma vaga de júnior, para que possa mostrar meu potencial e crescer ainda mais profissionalmente. Por isso, me arruma pelo menos uma entrevista, o resto eu desenrolo.'
       cy.get('#firstName').type('Tester'); // Selecting the CSS ID and typing in the field
       cy.get('#lastName').type('Júnior');  // Remember, # means ID and . means class
       cy.get('#email').type('jonathan.test@gmail.com'); 
@@ -41,9 +43,18 @@
 
       cy.get('#phone-checkbox').click()
       cy.get('.button[type="submit"]').click(); 
-      cy.get('.error').should('be.visible');
+      cy.get('.error').should('be.visible');   
+    })
+    it.only ('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
+      cy.get('#firstName').type('Tester').should('have.value', 'Tester'); 
+      cy.get('#lastName').type('Júnior').should('have.value', 'Júnior');  
+      cy.get('#email').type('jonathan.test@gmail.com').should('have.value', 'jonathan.test@gmail.com'); 
+      cy.get('#phone').type('5585991530543').should('have.value', '5585991530543');
 
-    
+      cy.get('#firstName').clear().should('have.value', ''); 
+      cy.get('#lastName').clear().should('have.value', '');  
+      cy.get('#email').clear().should('have.value', ''); 
+      cy.get('#phone').clear().should('have.value', '');
     })
   });
   
