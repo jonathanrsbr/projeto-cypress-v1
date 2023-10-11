@@ -17,7 +17,7 @@ const { should } = require("chai");
       cy.get('#lastName').type('Júnior');  // Remember, # means ID and . means class
       cy.get('#email').type('jonathan.test@gmail.com'); 
       cy.get('#open-text-area').type(longText, {delay: 0}); // Now the long text is gonna be typed fastly
-      cy.get('.button[type="submit"]').click(); // Selecting the CSS CLASS 'button'. Clicking to register the informations 
+      cy.contains('button', 'Enviar').click(); // Selecting the CSS CLASS 'button'. Clicking to register the informations 
       
       cy.get('.success').should('be.visible'); // Selecting the CSS CLASS 'success' and asserting if it's visible 
     });
@@ -26,7 +26,7 @@ const { should } = require("chai");
       cy.get('#lastName').type('Júnior');  
       cy.get('#email').type('jonathan.testgmail.com'); // Typed without @
       cy.get('#open-text-area').type('teste');
-      cy.get('.button[type="submit"]').click(); 
+      cy.contains('button', 'Enviar').click(); 
       
       cy.get('.error').should('be.visible');   
     })
@@ -42,7 +42,7 @@ const { should } = require("chai");
       cy.get('#open-text-area').type('teste');
 
       cy.get('#phone-checkbox').click()
-      cy.get('.button[type="submit"]').click(); 
+      cy.contains('button', 'Enviar').click(); 
       cy.get('.error').should('be.visible');   
     })
     it ('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
@@ -57,8 +57,10 @@ const { should } = require("chai");
       cy.get('#phone').clear().should('have.value', '');
     })
     it ('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
-      cy.get('.button[type="submit"]').click();
+      cy.contains('button', 'Enviar').click();
       cy.get('.error').should('be.visible')
     })
+    it ('envia o formuário com sucesso usando um comando customizado', function(){
+      cy.fillMandatoryFieldsAndSubmit()
+    })
   });
-  
