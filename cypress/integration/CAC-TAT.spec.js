@@ -45,7 +45,7 @@ const { should } = require("chai");
       cy.get('.button[type="submit"]').click(); 
       cy.get('.error').should('be.visible');   
     })
-    it.only ('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
+    it ('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
       cy.get('#firstName').type('Tester').should('have.value', 'Tester'); 
       cy.get('#lastName').type('Júnior').should('have.value', 'Júnior');  
       cy.get('#email').type('jonathan.test@gmail.com').should('have.value', 'jonathan.test@gmail.com'); 
@@ -55,6 +55,10 @@ const { should } = require("chai");
       cy.get('#lastName').clear().should('have.value', '');  
       cy.get('#email').clear().should('have.value', ''); 
       cy.get('#phone').clear().should('have.value', '');
+    })
+    it ('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
+      cy.get('.button[type="submit"]').click();
+      cy.get('.error').should('be.visible')
     })
   });
   
