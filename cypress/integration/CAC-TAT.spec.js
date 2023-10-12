@@ -11,6 +11,7 @@ const { should } = require("chai");
       cy.title().should('eq', 'Central de Atendimento ao Cliente TAT');
     });
   
+    // lesson 01 //
     it('preenche os campos obrigatórios e envia o formulário', function() {
       const longText = 'Campo - Como pode ajudar? Me conseguindo uma vaga de júnior, para que possa mostrar meu potencial e crescer ainda mais profissionalmente. Por isso, me arruma pelo menos uma entrevista, o resto eu desenrolo.'
       cy.get('#firstName').type('Tester'); // Selecting the CSS ID and typing in the field
@@ -21,6 +22,9 @@ const { should } = require("chai");
       
       cy.get('.success').should('be.visible'); // Selecting the CSS CLASS 'success' and asserting if it's visible 
     });
+
+    // lesson 02 //
+
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
       cy.get('#firstName').type('Tester'); 
       cy.get('#lastName').type('Júnior');  
@@ -63,4 +67,19 @@ const { should } = require("chai");
     it ('envia o formuário com sucesso usando um comando customizado', function(){
       cy.fillMandatoryFieldsAndSubmit()
     })
+
+    // lesson 03 // 
+
+    it ('seleciona um produto (YouTube) por seu texto', function(){
+      cy.get('#product').select('youtube').should('have.value', 'youtube')
+    })
+    it ('seleciona um produto (Mentoria) por seu valor (value)', function(){
+      cy.get('#product').select('Mentoria').should('be.visible', 'Mentoria') //Aqui eu poderia ter usado o valor, no caso, seria menotria com letra minúscula e usaria a option 'have.value'
+    })
+    it('seleciona um produto (Blog) por seu índice', function(){
+      cy.get('#product').select('blog').should('have.value', 'blog')
+    })
   });
+
+  
+  
