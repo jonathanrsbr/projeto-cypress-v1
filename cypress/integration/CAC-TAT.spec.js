@@ -49,7 +49,7 @@ const { should } = require("chai");
       cy.contains('button', 'Enviar').click(); 
       cy.get('.error').should('be.visible');   
     })
-    it ('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
+    it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
       cy.get('#firstName').type('Tester').should('have.value', 'Tester'); 
       cy.get('#lastName').type('Júnior').should('have.value', 'Júnior');  
       cy.get('#email').type('jonathan.test@gmail.com').should('have.value', 'jonathan.test@gmail.com'); 
@@ -60,20 +60,20 @@ const { should } = require("chai");
       cy.get('#email').clear().should('have.value', ''); 
       cy.get('#phone').clear().should('have.value', '');
     })
-    it ('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
+    it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
       cy.contains('button', 'Enviar').click();
       cy.get('.error').should('be.visible')
     })
-    it ('envia o formuário com sucesso usando um comando customizado', function(){
+    it('envia o formuário com sucesso usando um comando customizado', function(){
       cy.fillMandatoryFieldsAndSubmit()
     })
 
     // lesson 03 // 
 
-    it ('seleciona um produto (YouTube) por seu texto', function(){
+    it('seleciona um produto (YouTube) por seu texto', function(){
       cy.get('#product').select('youtube').should('have.value', 'youtube')
     })
-    it ('seleciona um produto (Mentoria) por seu valor (value)', function(){
+    it('seleciona um produto (Mentoria) por seu valor (value)', function(){
       cy.get('#product').select('Mentoria').should('be.visible', 'Mentoria') //Aqui eu poderia ter usado o valor, no caso, seria menotria com letra minúscula e usaria a option 'have.value'
     })
     it('seleciona um produto (Blog) por seu índice', function(){
@@ -85,7 +85,7 @@ const { should } = require("chai");
     it('marca o tipo de atendimento "Feedback"', function(){
       cy.get('input[type="radio"]').check('feedback').should('have.value', 'feedback')
     })
-    it.only('marca cada tipo de atendimento', function(){
+    it('marca cada tipo de atendimento', function(){
       cy.get('input[type="radio"]')
         .should('have.length', 3)
         .each(function($radio) {
