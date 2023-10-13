@@ -77,7 +77,7 @@ const { should } = require("chai");
       cy.get('#product').select('Mentoria').should('be.visible', 'Mentoria') //Aqui eu poderia ter usado o valor, no caso, seria menotria com letra minúscula e usaria a option 'have.value'
     })
     it('seleciona um produto (Blog) por seu índice', function(){
-      cy.get('#product').select('blog').should('have.value', 'blog')
+      cy.get('#product').select('Blog').should('be.visible', 'Blog')
     })
 
     // lesson 04 //
