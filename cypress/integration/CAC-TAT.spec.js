@@ -93,10 +93,4 @@ const { should } = require("chai");
           cy.wrap($radio).should('be.checked')
           });
     });
-    it.only('marca ambos checkboxes, depois desmarca o último', function(){
-      cy.get('input[type= "checkbox"]')
-        .check()
-        .last()
-        .uncheck()
-    });
   });
