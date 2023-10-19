@@ -90,6 +90,7 @@ const { should } = require("chai");
         .should('have.length', 3)
         .each(function($radio) {
           cy.wrap($radio).check()
-      });
-    })
+          cy.wrap($radio).should('be.checked')
+          });
+    });
   });
