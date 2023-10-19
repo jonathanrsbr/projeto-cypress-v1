@@ -93,4 +93,18 @@ const { should } = require("chai");
           cy.wrap($radio).should('be.checked')
           });
     });
+    // lesson 05 //
+    it('marca ambos checkboxes, depois desmarca o último', function(){
+      cy.get('input[type= "checkbox"]')
+        .check()
+        .last()
+        .uncheck()
+    });
+
+    // lesson 05, revisão do teste da lesson 02 para telefone //     
+    it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+      cy.get('input[type= "checkbox"]').check('phone')
+      cy.contains('button', 'Enviar').click(); 
+      cy.get('.error').should('be.visible'); 
+    })
   });
