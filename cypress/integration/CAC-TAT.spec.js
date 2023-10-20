@@ -102,9 +102,33 @@ const { should } = require("chai");
     });
 
     // lesson 05, revisão do teste da lesson 02 para telefone //     
-    it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+    it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
       cy.get('input[type= "checkbox"]').check('phone')
       cy.contains('button', 'Enviar').click(); 
-      cy.get('.error').should('be.visible'); 
+      cy.get('.error').should('be.visible');
+    })
+
+    // lesson 06 //
+    it('seleciona um arquivo da pasta fixtures', function(){
+      cy.get('input[type="file"]').should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json')
+        .should(function($input){
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
+    }) 
+    it('seleciona um arquivo simulando um drag-and-drop', function(){
+      cy.get('input[type="file"]').should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json', {action: 'drag-drop'})
+        .should(function($input){
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
+    })
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
+      cy.fixture('example.json').as('sampleFile')
+      cy.get('input[type="file"]')
+        .selectFile('@sampleFile')
+        .should(function($input){
+          expect($input[0].files[0].name).to.equal('example.json')
+        })
     })
   });
