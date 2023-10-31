@@ -142,6 +142,6 @@ const { should } = require("chai");
       cy.contains('e usada para fins de ensino.').should('be.visible')
     })
     // lesson08 //
-    
+    // Configuração do viewport //
   });
   
