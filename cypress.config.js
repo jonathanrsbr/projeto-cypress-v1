@@ -7,6 +7,9 @@ module.exports = defineConfig({
     },
     pluginsFile: false,
     viewportWidth: 1280,
-    viewportHeight: 880
+    viewportHeight: 880,
+    reporterOptions: {
+      json: false,
+    },
   },
 });
