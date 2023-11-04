@@ -163,5 +163,27 @@ const { should } = require("chai");
     // lesson09 - Documentação/Readme //
     // lesson10 - Configuração do CI(Github actions) //
     // lesson11 - adicionando cy.clock() e cy.tick() //
+    // lesson11 - refazendo a lesson01 com lodash //
+    it('preenche os campos obrigatórios e envia o formulário', function() {
+      const longText = Cypress._.repeat('0123456789', 20); // salvo na variável o comando lodash, repeat(), com uma string sendo repetida 20 vezes
+      
+      cy.clock() // Congela o relógio do navegador
+      cy.get('#firstName').type('Tester'); // Selecting the CSS ID and typing in the field
+      cy.get('#lastName').type('Júnior');  // Remember, # means ID and . means class
+      cy.get('#email').type('jonathan.test@gmail.com');
+
+      cy.get('#open-text-area').invoke('val', longText); 
+
+      cy.contains('button', 'Enviar').click(); // Selecting the CSS CLASS 'button'. Clicking to register the informations 
+      
+      cy.get('.success').should('be.visible') // Selecting the CSS CLASS 'success' and asserting if it's visible 
+    
+      cy.tick(three_seconds) // Avança o relógio 3 segundos, exatamente o tempo que a mensagem de erro some
+    
+      cy.get('.success').should('not.be.visible'); // Agora quero ver se não vai ser visível
+    });
   });
+
+
+  
   
