@@ -3,6 +3,7 @@
 const { should } = require("chai");
 
   describe('Central de Atendimento ao Cliente TAT', function() {
+    const three_seconds = 3000
     beforeEach(function() {
       cy.visit('./src/index.html'); // Visiting the path to internal HTML file
     });
@@ -14,25 +15,34 @@ const { should } = require("chai");
     // lesson 01 //
     it('preenche os campos obrigatórios e envia o formulário', function() {
       const longText = 'Campo - Como pode ajudar? Me conseguindo uma vaga de júnior, para que possa mostrar meu potencial e crescer ainda mais profissionalmente. Por isso, me arruma pelo menos uma entrevista, o resto eu desenrolo.'
+      
+      cy.clock() // Congela o relógio do navegador
+      
       cy.get('#firstName').type('Tester'); // Selecting the CSS ID and typing in the field
       cy.get('#lastName').type('Júnior');  // Remember, # means ID and . means class
       cy.get('#email').type('jonathan.test@gmail.com'); 
       cy.get('#open-text-area').type(longText, {delay: 0}); // Now the long text is gonna be typed fastly
       cy.contains('button', 'Enviar').click(); // Selecting the CSS CLASS 'button'. Clicking to register the informations 
       
-      cy.get('.success').should('be.visible'); // Selecting the CSS CLASS 'success' and asserting if it's visible 
+      cy.get('.success').should('be.visible') // Selecting the CSS CLASS 'success' and asserting if it's visible 
+    
+      cy.tick(three_seconds) // Avança o relógio 3 segundos, exatamente o tempo que a mensagem de erro some
+    
+      cy.get('.success').should('not.be.visible'); // Agora quero ver se não vai ser visível
     });
 
     // lesson 02 //
 
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
+      cy.clock()
       cy.get('#firstName').type('Tester'); 
       cy.get('#lastName').type('Júnior');  
       cy.get('#email').type('jonathan.testgmail.com'); // Typed without @
       cy.get('#open-text-area').type('teste');
       cy.contains('button', 'Enviar').click(); 
-      
-      cy.get('.error').should('be.visible');   
+      cy.get('.error').should('be.visible');
+      cy.tick(three_seconds);
+      cy.get('.error').should('not.be.visible');   
     })
     it('campo telefone permanece vazio quando preenchido com valor não-numérico', function(){
       cy.get('#phone')
@@ -40,14 +50,16 @@ const { should } = require("chai");
         .should('have.value', '')      
     })
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+      cy.clock();
       cy.get('#firstName').type('Tester'); 
       cy.get('#lastName').type('Júnior');  
       cy.get('#email').type('jonathan.test@gmail.com'); 
       cy.get('#open-text-area').type('teste');
-
       cy.get('#phone-checkbox').click()
       cy.contains('button', 'Enviar').click(); 
-      cy.get('.error').should('be.visible');   
+      cy.get('.error').should('be.visible');
+      cy.tick(three_seconds);
+      cy.get('.error').should('not.be.visible');
     })
     it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
       cy.get('#firstName').type('Tester').should('have.value', 'Tester'); 
@@ -61,8 +73,11 @@ const { should } = require("chai");
       cy.get('#phone').clear().should('have.value', '');
     })
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
+      cy.clock()
       cy.contains('button', 'Enviar').click();
       cy.get('.error').should('be.visible')
+      cy.tick(three_seconds);
+      cy.get('.error').should('not.be.visible')
     })
     it('envia o formuário com sucesso usando um comando customizado', function(){
       cy.fillMandatoryFieldsAndSubmit()
@@ -103,9 +118,12 @@ const { should } = require("chai");
 
     // lesson 05, revisão do teste da lesson 02 para telefone //     
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+      cy.clock()
       cy.get('input[type= "checkbox"]').check('phone')
       cy.contains('button', 'Enviar').click(); 
       cy.get('.error').should('be.visible');
+      cy.tick(three_seconds);
+      cy.get('.error').should('not.be.visible');
     })
 
     // lesson 06 //
@@ -141,7 +159,9 @@ const { should } = require("chai");
         .click()
       cy.contains('e usada para fins de ensino.').should('be.visible')
     })
-    // lesson08 //
-    // Configuração do viewport //
+    // lesson08 - Configuração do viewport //
+    // lesson09 - Documentação/Readme //
+    // lesson10 - Configuração do CI(Github actions) //
+    // lesson11 - adicionando cy.clock() e cy.tick() //
   });
   
