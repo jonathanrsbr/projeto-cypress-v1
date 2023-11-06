@@ -164,6 +164,7 @@ const { should } = require("chai");
     // lesson10 - Configuração do CI(Github actions) //
     // lesson11 - adicionando cy.clock() e cy.tick() //
     // lesson11 - refazendo a lesson01 com lodash //
+    // lodash - repeat //
     it('preenche os campos obrigatórios e envia o formulário', function() {
       const longText = Cypress._.repeat('0123456789', 20); // salvo na variável o comando lodash, repeat(), com uma string sendo repetida 20 vezes
       
@@ -181,6 +182,13 @@ const { should } = require("chai");
       cy.tick(three_seconds) // Avança o relógio 3 segundos, exatamente o tempo que a mensagem de erro some
     
       cy.get('.success').should('not.be.visible'); // Agora quero ver se não vai ser visível
+    });
+    // lodash - time //
+    // Vou refazer o teste da lesson02, dessa vez repetindo 5 vezes o envio, para verificar a estabilidade do teste //
+    Cypress._.times(5, () => {
+      it.only('envia o formuário com sucesso usando um comando customizado', () => {
+      cy.fillMandatoryFieldsAndSubmit()
+      });
     });
   });
 
