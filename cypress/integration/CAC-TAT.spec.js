@@ -186,9 +186,26 @@ const { should } = require("chai");
     // lodash - time //
     // Vou refazer o teste da lesson02, dessa vez repetindo 5 vezes o envio, para verificar a estabilidade do teste //
     Cypress._.times(5, () => {
-      it.only('envia o formuário com sucesso usando um comando customizado', () => {
+      it('envia o formuário com sucesso usando um comando customizado', () => {
       cy.fillMandatoryFieldsAndSubmit()
       });
+    });
+    // invoke('show') e invoke('hide')
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+      cy.get('.success')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .and('contain', 'Mensagem enviada com sucesso.')
+        .invoke('hide')
+        .should('not.be.visible')
+      cy.get('.error')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .and('contain', 'Valide os campos obrigatórios!')
+        .invoke('hide')
+        .should('not.be.visible')
     });
   });
 
