@@ -218,6 +218,22 @@ const { should } = require("chai");
           expect(body).to.include('CAC TAT')
         })
     })
+    // lesson 12 - Encontre o Gato //
+    // Checando se ele está no código // 
+    it.only('Verificar se o gato está visível', function(){
+      cy.get('#cat').should('contain', '🐈')
+    })
+    // Fazendo ele ficar visível e checando // 
+    it.only('Verificar se o gato está visível', function(){
+      cy.get('#cat')
+      .invoke('show')
+      .should('be.visible') 
+      // Brincando com invoke e mudando coisas no site //
+      cy.get('#title')
+        .invoke('text', 'CAT TAT') //Invoquei o texto de título e mudei pra CAT TAT    
+      cy.get('#subtitle')
+        .invoke('text', 'Eu 💛 Gatos')
+    })
   });
 
 
