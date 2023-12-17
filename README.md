@@ -1,4 +1,4 @@
-# cypress-basico-v1
+# cypress-basico-v1 
 
 Sample project from "Talking About Testing" Cypress basic course.
 
